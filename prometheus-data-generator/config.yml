@@ -1,0 +1,48 @@
+---
+config:
+  - name: probe_success
+    description: Displays whether or not the probe was a success
+    type: gauge
+    labels: [service, type]
+    sequence:
+      - eval_time: 60
+        interval: 1
+        value: 1
+        operation: set
+        labels:
+          service: proxy
+          type: ingress
+      - eval_time: 70
+        interval: 0
+        value: 0
+        operation: set
+        labels:
+          service: proxy
+          type: ingress
+
+  - name: probe_duration_seconds
+    description: Returns how long the probe took to complete in seconds
+    type: gauge
+    labels: [service, type]
+    sequence:
+      - eval_time: 60
+        interval: 1
+        values: 0.5-0.9
+        operation: inc
+        labels:
+          service: proxy
+          type: ingress
+      - eval_time: 70
+        interval: 1
+        values: 0.5-0.9
+        operation: dec
+        labels:
+          service: proxy
+          type: ingress
+      - eval_time: 1
+        interval: 1
+        value: 0
+        operation: set
+        labels:
+          service: proxy
+          type: ingress

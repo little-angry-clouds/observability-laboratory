@@ -1,0 +1,9 @@
+groups:
+  - name: blackbox.rules
+    rules:
+    - alert: ProbeFails
+      expr: probe_success != 1
+      for: 30s
+    - alert: ProbeDurationTooHigh
+      expr: probe_duration_seconds >= 5
+      for: 30s

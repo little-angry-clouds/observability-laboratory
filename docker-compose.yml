@@ -1,0 +1,42 @@
+version: '2.0'
+services:
+  grafana:
+    image: grafana/grafana:6.2.5
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ./grafana/dashboards/:/etc/grafana/provisioning/dashboards/
+      - ./grafana/datasources/:/etc/grafana/provisioning/datasources/
+  prometheus:
+    image: prom/prometheus:v2.16.0
+    command:
+      - --web.enable-lifecycle
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/rules.yml:/etc/prometheus/rules.yml
+  prometheus-data-generator:
+    image: littleangryclouds/prometheus-data-generator:latest
+    volumes:
+      - ./prometheus-data-generator/:/prometheus-data-generator/
+    environment:
+      PDG_LOG_LEVEL: INFO
+      PDG_CONFIG: /prometheus-data-generator/config.yml
+  prom-configmap-reloader:
+    image: littleangryclouds/configmap-reload
+    volumes:
+      - ./prometheus/:/prometheus/
+    command:
+      - -webhook-url=http://prometheus:9090/-/reload
+      - -volume-dir=/prometheus/
+      - -webhook-method=POST
+  pdg-configmap-reloader:
+    image: littleangryclouds/configmap-reload
+    volumes:
+      - ./prometheus-data-generator/:/prometheus-data-generator/
+    command:
+      - -webhook-url=http://prometheus-data-generator:9000/-/reload
+      - -volume-dir=/prometheus-data-generator/
+      - -webhook-method=GET
