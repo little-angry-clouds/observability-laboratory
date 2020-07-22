@@ -37,7 +37,7 @@ Clone the repository (with the `recursive` parameter if you want
 [grafonnet](https://github.com/grafana/grafonnet-lib)):
 
 ```bash
-git clone --recursive https://github.com/little-angry-clouds/promlab
+git clone --recursive https://github.com/little-angry-clouds/observability-laboratory
 ```
 
 Launch the containers:
