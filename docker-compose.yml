@@ -40,3 +40,10 @@ services:
       - -webhook-url=http://prometheus-data-generator:9000/-/reload
       - -volume-dir=/prometheus-data-generator/
       - -webhook-method=GET
+  linux-node-exporter:
+    image: quay.io/prometheus/node-exporter
+    pid: host
+    volumes:
+      - /:/host:ro,rslave
+    command:
+      - --path.rootfs=/host
