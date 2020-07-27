@@ -1,4 +1,7 @@
-version: '2.0'
+---
+version: "2.4"
+volumes:
+  gradle-cache:
 services:
   grafana:
     image: grafana/grafana:6.2.5
@@ -47,3 +50,29 @@ services:
       - /:/host:ro,rslave
     command:
       - --path.rootfs=/host
+  python-microservice-flask:
+    build:
+      context: python-microservice
+    volumes:
+      - ./python-microservice/:/app/
+    command:
+      - python
+      - flask-example.py
+  python-microservice-pyms:
+    build:
+      context: python-microservice
+    volumes:
+      - ./python-microservice/:/app/
+    command:
+      - python
+      - pyms-example.py
+  java-microservice:
+    image: gradle
+    working_dir: /app/
+    volumes:
+      - gradle-cache:/home/gradle/.gradle
+      - ./java-microservice:/app/
+    command:
+      - gradle
+      - bootRun
+      - --args="--spring.config.location=file:./src/main/java/resources/application.yml"

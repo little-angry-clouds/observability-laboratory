@@ -1,0 +1,8 @@
+---
+pyms:
+  services:
+    metrics:
+      enabled: true
+  config: # 1.3
+    debug: true
+    app_name: hello-world

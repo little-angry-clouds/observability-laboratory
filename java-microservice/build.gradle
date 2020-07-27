@@ -1,0 +1,26 @@
+plugins {
+    id "application"
+    id "org.springframework.boot" version "2.3.0.RELEASE"
+}
+
+repositories {
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+application {
+    mainClassName = "com.observabilityLaboratory.spring.springboot.helloworld.Application"
+}
+
+dependencies {
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.0.RELEASE"))
+    implementation(platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.SR2"))
+    implementation(platform("com.googlecode.json-simple:json-simple:1.1.1"))
+
+    compile("com.googlecode.json-simple:json-simple")
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("io.micrometer:micrometer-registry-prometheus")
+}

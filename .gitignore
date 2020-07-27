@@ -1,0 +1,3 @@
+/java-microservice/build/
+/java-microservice/.gradle/
+/python-microservice/__pycache__/
