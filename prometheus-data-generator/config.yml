@@ -46,3 +46,51 @@ config:
         labels:
           service: proxy
           type: ingress
+
+  - name: http_client_requests_seconds_count
+    description: Seconds spend in requests
+    type: counter
+    labels: [service, method, uri]
+    sequence:
+      - eval_time: 20
+        interval: 1
+        value: 3
+        labels:
+          service: hello-world
+          method: GET
+          uri: /api/v1/service
+      - eval_time: 30
+        interval: 1
+        value: 3
+        labels:
+          service: hello-world
+          method: POST
+          uri: /api/v1/service
+      - eval_time: 20
+        interval: 2
+        value: 1
+        labels:
+          service: hello-world
+          method: GET
+          uri: /api/v1/service
+      - eval_time: 30
+        interval: 2
+        value: 1
+        labels:
+          service: hello-world
+          method: POST
+          uri: /api/v1/service
+      - eval_time: 20
+        interval: 2
+        value: 0
+        labels:
+          service: hello-world
+          method: GET
+          uri: /api/v1/service
+      - eval_time: 30
+        interval: 2
+        value: 0
+        labels:
+          service: hello-world
+          method: POST
+          uri: /api/v1/service
