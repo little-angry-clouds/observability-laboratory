@@ -73,5 +73,10 @@ docker-compose up
 And that's it. You only have to edit the metrics, the rules and the dashboards
 and access the services:
 
-- [Grafana](http://localhost:3000): Default credentials are admin:admin
-- [Prometheus](http://localhost:9090)
+- [Grafana](http://localhost:10000): Default credentials are admin:admin
+- [Prometheus](http://localhost:10010)
+- [Prometheus Data Generator](http://localhost:10020)
+- [Linux Node Exporter](http://localhost:10030)
+- [Python Flask](http://localhost:10040)
+- [Python Pyms](http://localhost:10050)
+- [Java Springboot](http://localhost:10060)
