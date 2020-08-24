@@ -1,6 +1,5 @@
 package com.observabilityLaboratory.spring.springboot.helloworld.controller;
 
-import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
