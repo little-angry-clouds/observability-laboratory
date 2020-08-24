@@ -17,15 +17,19 @@ The laboratory consists in:
 - prometheus
 - prometheus-data-generator
 - confimap-reloader for prometheus and for prometheus-data-generator
+- python and java example microservices
+- linux node exporter
 
-## Metrics
+## Prometheus
 
-You may edit the `prometheus-data-generator/config.yml` to configure it. The
+### Generate Metrics
+
+You can generate arbitrary metrics. To do so, you may edit the `prometheus-data-generator/config.yml` to configure it. The
 changes will be detected live, so you don't have to do anything more than edit it. You may
 get more details on how to configure this exporter in it's
 [repository](https://github.com/little-angry-clouds/prometheus-data-generator).
 
-## Alerts
+### Alerts
 
 You may edit the `prometheus/rules.yml`. It will also be detected automatically
 and prometheus will reload its configuration.
@@ -35,6 +39,10 @@ and prometheus will reload its configuration.
 It will import any json dashboard that grafana detects in the
 `grafana/dashboards/` directory. The dashboards will be imported and detected
 automatically.
+
+It has the [grafonnet](https://github.com/grafana/grafonnet-lib))submodule, in
+case you want to generate the dashboards with it. The blackbox dashboard is an
+example of it.
 
 ## Linux node exporter
 
@@ -48,12 +56,12 @@ It can't be dockerized, so there's none.
 
 ### Python
 
-There's to python microservices, one with plain [flask](https://flask.palletsprojects.com/en/1.1.x/)
+There's two python microservices, one with plain [flask](https://flask.palletsprojects.com/en/1.1.x/)
 and the other with [pyms](https://github.com/python-microservices/pyms).
 
 ### Java
 
-There a java microservice with SpringBoot.
+There's a java microservice with SpringBoot.
 
 ## How to use it
 
