@@ -3,17 +3,53 @@ global:
   evaluation_interval: 5s
 
 scrape_configs:
-  - job_name: generic
+  - job_name: generic-metrics
     static_configs:
       - targets:
           - prometheus-data-generator:9000
           - linux-node-exporter:9100
           - python-microservice-pyms:8080
           - python-microservice-flask:8080
-  - job_name: java-microservice
+  - job_name: java-microservice-metrics
     metrics_path: /actuator/prometheus
     static_configs:
       - targets:
           - java-microservice:8080
+  - job_name: blackbox-fake-traffic-python
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - python-microservice-pyms:8080
+          - python-microservice-flask:8080
+          - python-microservice-pyms:8080/world/
+          - python-microservice-flask:8080/world/
+        labels:
+          lang: python
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+  - job_name: blackbox-fake-traffic-java
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - java-microservice:8080
+          - java-microservice:8080/world/
+        labels:
+          lang: java
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
 rule_files:
   - /etc/prometheus/rules.yml

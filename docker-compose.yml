@@ -86,3 +86,19 @@ services:
       - --args="--spring.config.location=file:./src/main/java/resources/application.yml"
     ports:
       - "127.0.0.1:10060:8080"
+  blackbox-exporter:
+    image: prom/blackbox-exporter:master
+    # volumes:
+    #   - ./blackbox-exporter/:/config/
+    # command:
+    #   - --config.file=/config/config.yml
+    ports:
+      - "127.0.0.1:10070:9115"
+  blackbox-configmap-reloader:
+    image: littleangryclouds/configmap-reload
+    volumes:
+      - ./blackbox-exporter/:/config/
+    command:
+      - -webhook-url=http://blackbox-exporter:9115/-/reload
+      - -volume-dir=/config/
+      - -webhook-method=GET
