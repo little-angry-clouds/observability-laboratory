@@ -3,22 +3,24 @@
 This repository contains a docker compose configuration that will make possible
 for you to develop grafana dashboards with a prometheus datasource.
 
-One of the hardest things whern trying to learn how prometheus works is having
+One of the hardest things when trying to learn how prometheus works is having
 consistent metrics. All the exporters are different, you have to configure them,
-etc. That why in this laboratory the metrics are created arbitrarly.
+etc. That's why in this laboratory the metrics can be created arbitrarly, even 
+though there's some exporters and instrumented programs.
 
-This is done with
-[prometheus-data-generator](https://github.com/little-angry-clouds/prometheus-data-generator),
-fake Prometheus exporter that let's you create arbitrary metrics.
+The fake metrics are done with
+[prometheus-data-generator](https://github.com/little-angry-clouds/prometheus-data-generator).
+It's a fake Prometheus exporter that let's you create the metrics.
 
 The laboratory consists in:
 
 - grafana
 - prometheus
 - prometheus-data-generator
-- confimap-reloader for prometheus and for prometheus-data-generator
 - python and java example microservices
 - linux node exporter
+- blackbox exporter
+- confimap-reloader
 
 ## Prometheus
 
@@ -63,6 +65,10 @@ and the other with [pyms](https://github.com/python-microservices/pyms).
 
 There's a java microservice with SpringBoot.
 
+### Blackbox exporter
+
+Used to make requests to the microservices and create metrics.
+
 ## How to use it
 
 Clone the repository (with the `recursive` parameter if you want
@@ -88,3 +94,4 @@ and access the services:
 - [Python Flask](http://localhost:10040)
 - [Python Pyms](http://localhost:10050)
 - [Java Springboot](http://localhost:10060)
+- [Blackbox Exporter](http://localhost:10070)
