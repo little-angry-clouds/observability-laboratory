@@ -6,15 +6,25 @@ from flask import Flask, jsonify, Response
 from prometheus_client import Gauge, generate_latest
 
 app = Flask(__name__)
-gauge = Gauge("python_microservice_wait_time", "Returns the waited time", ["service"])
+gauge = Gauge(
+    "python_microservice_wait_time", "Returns the waited time", ["service", "path"]
+)
+
+
+@app.route("/world/")
+def world():
+    wait_time = randint(1, 3)
+    sleep(wait_time)
+    gauge.labels("flask-example", "/world/").set(wait_time)
+    return jsonify({"message": "Hello World!"})
 
 
 @app.route("/")
 def root():
     wait_time = randint(1, 3)
     sleep(wait_time)
-    gauge.labels("flask-example").set(wait_time)
-    return jsonify({"message": "Hello World!"})
+    gauge.labels("flask-example", "/").set(wait_time)
+    return jsonify({"message": "Hello root!"})
 
 
 @app.route("/metrics")

@@ -8,15 +8,25 @@ from prometheus_client import Gauge
 
 ms = Microservice()
 app = ms.create_app()
-gauge = Gauge("python_microservice_wait_time", "Returns the waited time", ["service"])
+gauge = Gauge(
+    "python_microservice_wait_time", "Returns the waited time", ["service", "path"]
+)
+
+
+@app.route("/world/")
+def world():
+    wait_time = randint(1, 3)
+    sleep(wait_time)
+    gauge.labels("pyms-example", "/world/").set(wait_time)
+    return jsonify({"message": "Hello World!"})
 
 
 @app.route("/")
 def root():
     wait_time = randint(1, 3)
     sleep(wait_time)
-    gauge.labels("pyms-example").set(wait_time)
-    return jsonify({"message": "Hello World!"})
+    gauge.labels("pyms-example", "/").set(wait_time)
+    return jsonify({"message": "Hello root!"})
 
 
 if __name__ == "__main__":
